@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { Gifs } from '../../interfaces/gifs.interfaces';
 
 @Component({
@@ -8,8 +8,16 @@ import { Gifs } from '../../interfaces/gifs.interfaces';
   styleUrl: './gifs-card.component.css',
   standalone:false,
 })
-export class GifsCardComponent {
+export class GifsCardComponent implements OnInit {
+    
+  @Input()
+  public gif!:Gifs;
+    
+  ngOnInit(): void {
+    if (!this.gif) throw new Error("Gif property is requiered")
+    
+  }
 
-    @Input()
-    public gifs:Gifs[] = [];
- }
+   
+
+}
