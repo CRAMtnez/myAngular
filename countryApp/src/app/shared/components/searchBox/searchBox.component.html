@@ -2,7 +2,9 @@
     type="text" 
     [placeholder] = "placeholder" 
     class="form-control"
-    (keyup.enter) = "onEnter()"
+    (keyup)="onKeyPress(txtInput.value)"
 
     #txtInput
 >
+
+<!--(keyup.enter) = "onEnter()"-->

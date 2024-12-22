@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { debounceTime, Subject, Subscription } from 'rxjs';
 
 @Component({
   selector: 'shared-search-box',
@@ -11,7 +12,12 @@ import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, Ou
   `,
   standalone: false,
 })
-export class SearchBoxComponent { 
+export class SearchBoxComponent implements OnInit,OnDestroy{
+
+  
+
+  private debouncer:Subject<string> = new Subject<string>();
+  private debouncerSubscription?:Subscription;
 
 
     @Input()
@@ -20,22 +26,36 @@ export class SearchBoxComponent {
     @Output()
     public onValue:EventEmitter<string> = new EventEmitter();
 
+    @Output()
+    public onDebounce:EventEmitter<string> = new EventEmitter();
+
     
     @ViewChild('txtInput')
     tagInput!: ElementRef<HTMLInputElement>
     
     
+    ngOnInit(): void {
+      this.debouncerSubscription = this.debouncer
+      .pipe(
+        debounceTime(1000)
+      )
+      .subscribe (value =>{
+        this.onDebounce.emit(value)
+      })
+    } 
+    
+    ngOnDestroy(): void {
+      this.debouncerSubscription?.unsubscribe();
+    }
 
-    
-    
+
     public onEnter():void{
         console.log("Ingreso")
         const term = this.tagInput.nativeElement.value;
         this.onValue.emit(term)
     }
 
-    /*public onKeyPress():void{
-        this.term = this.tagInput.nativeElement.value;
-        this.searchValue.emit(this.term)
-    }*/
+    public onKeyPress(searchTerm:string):void{
+        this.debouncer.next(searchTerm);
+    }
 }

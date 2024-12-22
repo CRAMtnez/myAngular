@@ -5,6 +5,7 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { RouterModule } from '@angular/router';
 import { ContactPageComponent } from './pages/contactPage/contactPage.component';
 import { SearchBoxComponent } from './components/searchBox/searchBox.component';
+import { LoadingSpinnerComponent } from './components/loadingSpinner/loadingSpinner.component';
 
 
 
@@ -18,6 +19,7 @@ import { SearchBoxComponent } from './components/searchBox/searchBox.component';
         SidebarComponent,
         ContactPageComponent,
         SearchBoxComponent,
+        LoadingSpinnerComponent,
     ],
     declarations: [
         HomePageComponent,
@@ -25,7 +27,7 @@ import { SearchBoxComponent } from './components/searchBox/searchBox.component';
         SidebarComponent,
         ContactPageComponent,
         SearchBoxComponent,
-        
+        LoadingSpinnerComponent,
     ],
     providers: [],
 })

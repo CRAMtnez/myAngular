@@ -5,14 +5,18 @@
     <div class="col">
         <shared-search-box 
             placeholder="Buscar por capital"
-            (onValue) = "searchByCapital($event)"
+            (onDebounce) = "searchByCapital($event)"
         >
         </shared-search-box>
     </div>
 </div>
 
+<hr>
 <div class="row">
     <div class="col">
-        tabla de resultados
+        @if (isLoading) {
+        <shared-loading-spinner></shared-loading-spinner>
+        }
+        <countries-table [countries]="countries"></countries-table>
     </div>
 </div>
